@@ -3,87 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dev Tracker</title>
+    <title>Dev Tracker - Project Dashboard</title>
     <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --border-color: #d1d5db;
+            --danger-color: #ef4444;
+            --danger-hover: #dc2626;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 500px;
-            margin: 50px auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
             padding: 20px;
-            background-color: #f4f4f9;
         }
-        h2 {
-            color: #333;
+
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
-        form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        h2, h3 {
+            color: var(--primary-color);
+            text-align: center;
         }
-        div {
-            margin-bottom: 15px;
+
+        .form-group {
+            margin-bottom: 20px;
         }
+
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
         }
-        input, textarea, select {
+
+        input[type="text"],
+        textarea,
+        select {
             width: 100%;
-            padding: 8px;
+            padding: 10px 12px;
             box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
         }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
         button {
-            background-color: #28a745;
+            width: 100%;
+            background-color: var(--primary-color);
             color: white;
-            padding: 10px 15px;
+            padding: 12px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.2s;
         }
+
         button:hover {
-            background-color: #218838;
+            background-color: var(--primary-hover);
         }
+
         #message {
             margin-top: 15px;
-            font-weight: bold;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .projects-section {
+            margin-top: 40px;
+            border-top: 2px solid var(--bg-color);
+            padding-top: 20px;
+        }
+
+        .project-card {
+            background: #f9fafb;
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .project-info {
+            flex-grow: 1;
+            margin-right: 15px;
+        }
+
+        .project-card h4 {
+            margin: 0 0 8px 0;
+            color: var(--text-color);
+            font-size: 18px;
+        }
+
+        .project-card p {
+            margin: 0 0 10px 0;
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.pending { background-color: #fef3c7; color: #d97706; }
+        .badge.in-progress { background-color: #e0e7ff; color: #4f46e5; }
+        .badge.completed { background-color: #d1fae5; color: #059669; }
+
+        .delete-btn {
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            width: auto;
+            transition: background-color 0.2s;
+        }
+
+        .delete-btn:hover {
+            background-color: var(--danger-hover);
         }
     </style>
 </head>
 <body>
 
-    <h2>Dev Tracker - Add Project</h2>
-    
-    <form id="projectForm">
-        <div>
-            <label for="title">Project Title:</label>
-            <input type="text" id="title" required>
-        </div>
+    <div class="container">
+        <h2>🚀 Dev Tracker</h2>
         
-        <div>
-            <label for="description">Description:</label>
-            <textarea id="description" rows="4" required></textarea>
-        </div>
-        
-        <div>
-            <label for="status">Status:</label>
-            <select id="status">
-                <option value="pending">Pending</option>
-                <option value="in-progress">In Progress</option>
-                <option value="completed">Completed</option>
-            </select>
-        </div>
-        
-        <button type="submit">Add Project</button>
-    </form>
+        <form id="projectForm">
+            <div class="form-group">
+                <label for="title">Project Title:</label>
+                <input type="text" id="title" placeholder="e.g. Portfolio Website" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" rows="3" placeholder="Briefly describe your project..." required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status">
+                    <option value="pending">Pending</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            
+            <button type="submit">Add Project</button>
+        </form>
 
-    <div id="message"></div>
+        <div id="message"></div>
+
+        <div class="projects-section">
+            <h3>📋 Saved Projects</h3>
+            <div id="projectsList">Loading projects...</div>
+        </div>
+    </div>
 
     <script>
+        const API_URL = 'http://localhost:5000/api/projects';
+
+        // Function to fetch and display projects
+        async function fetchProjects() {
+            try {
+                const response = await fetch(API_URL);
+                const projects = await response.json();
+                const listDiv = document.getElementById('projectsList');
+
+                if (projects.length === 0) {
+                    listDiv.innerHTML = '<p style="text-align: center; color: #6b7280;">No projects found. Add your first project above!</p>';
+                    return;
+                }
+
+                let html = '';
+                projects.forEach(proj => {
+                    // MongoDB uses _id, securing it here
+                    const projectId = proj._id || proj.id;
+                    
+                    html += `
+                        <div class="project-card">
+                            <div class="project-info">
+                                <h4>${proj.title}</h4>
+                                <p>${proj.description}</p>
+                                <span class="badge ${proj.status}">${proj.status}</span>
+                            </div>
+                            <button class="delete-btn" onclick="deleteProject('${projectId}')">Delete</button>
+                        </div>
+                    `;
+                });
+                listDiv.innerHTML = html;
+            } catch (error) {
+                document.getElementById('projectsList').innerHTML = '<p style="text-align: center; color: #ef4444;">Failed to load projects.</p>';
+            }
+        }
+
+        // Function to delete a project
+        async function deleteProject(id) {
+            if (!confirm('Are you sure you want to delete this project?')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    fetchProjects(); // Refresh the list instantly
+                } else {
+                    alert('Failed to delete the project.');
+                }
+            } catch (error) {
+                alert('Error connecting to server.');
+            }
+        }
+
+        // Handle form submission
         document.getElementById('projectForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -92,7 +260,7 @@
             const status = document.getElementById('status').value;
 
             try {
-                const response = await fetch('http://localhost:5000/api/projects', {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -104,19 +272,23 @@
                 const messageDiv = document.getElementById('message');
 
                 if (response.ok) {
-                    messageDiv.textContent = 'Project added successfully!';
-                    messageDiv.style.color = 'green';
+                    messageDiv.textContent = '✨ Project added successfully!';
+                    messageDiv.style.color = '#10b981';
                     document.getElementById('projectForm').reset();
+                    fetchProjects(); // Refresh the list instantly
                 } else {
-                    messageDiv.textContent = `Error: ${result.message || 'Something went wrong'}`;
-                    messageDiv.style.color = 'red';
+                    messageDiv.textContent = `❌ Error: ${result.message || 'Something went wrong'}`;
+                    messageDiv.style.color = '#ef4444';
                 }
             } catch (error) {
                 const messageDiv = document.getElementById('message');
-                messageDiv.textContent = 'Error connecting to server!';
-                messageDiv.style.color = 'red';
+                messageDiv.textContent = '❌ Error connecting to server!';
+                messageDiv.style.color = '#ef4444';
             }
         });
+
+        // Load projects when the page opens
+        fetchProjects();
     </script>
 
 </body>

@@ -1,18 +1,21 @@
 const mongoose = require('mongoose');
 
-const devSchema = new mongoose.Schema({
+const projectSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true  
+        required: true,
+        trim: true
     },
     description: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     status: {
         type: String,
         enum: ['pending', 'in-progress', 'completed'],
         default: 'pending'
-       }
-    });
-    module.exports = mongoose.model('DevProject', devSchema);
+    }
+}, { timestamps: true });
+
+module.exports = mongoose.model('DevProject', projectSchema);
