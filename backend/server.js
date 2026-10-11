@@ -2,6 +2,7 @@
 const connectDB = require('./db');
 const express = require('express');
 const cors=require('cors');
+const projectRoutes = require('./routes/projectRoutes');
 require('dotenv').config();
 
 //setting the port 
@@ -15,7 +16,7 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 app.use(cors());
 app.use(express.json());
-
+app.use('/api/projects', projectRoutes);
 
 
 // first test route
